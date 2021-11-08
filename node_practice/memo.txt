@@ -1,0 +1,8 @@
+동기적: readFileSync
+비동기: readFile
+callback 함수 : 비동기 함수에서 함수처리끝나고 뒤늦게 실행시키는 함수
+
+Node Package Manager(NPM)
+
+- g: global하게 프로그램 사용 가능
+- pm2 : 프로세스 관리, 파일이 수정되면 자동으로 node실행(--watch 옵션)
