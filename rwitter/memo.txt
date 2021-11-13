@@ -1,0 +1,4 @@
+<Firebase>
+
+ㅇ Auth
+    - onAuthStateChanged : 로그인 상태를 관찰하여 로그인여부를 판별.
