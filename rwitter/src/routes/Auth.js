@@ -39,11 +39,11 @@ const Auth = ()=> {
         let provider;
         if(name === "google"){
             provider = new GoogleAuthProvider();
-
+            
         }else if(name ==="github"){
-
+            provider = new GithubAuthProvider();
         }
-        await authService.signInWithPopup(provider);
+        await signInWithPopup(authService,provider);
     };
     return (
     <div>
@@ -55,9 +55,12 @@ const Auth = ()=> {
         {error}
         <span onClick={toggleAccount}>{newAccount ? "Sign In" : "Log In"}</span>
         <div>
+            
             <button onClick={onSocialClick} name="google">Continue with Google</button>
             <button onClick={onSocialClick} name="github">Continue with Github</button>
         </div>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+
     </div>
     )
 }

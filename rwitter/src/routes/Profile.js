@@ -1,6 +1,15 @@
 import React from 'react';
+import {getAuth} from 'firebase/auth'
+import {useNavigate} from 'react-router-dom';
 
 const Profile =()=>{
-    return <div>Profile</div>
+    const history = useNavigate();
+    const onLogOutClick= () => {
+        getAuth().signOut();
+        history("/");
+    };
+    return <>
+    <button onClick={onLogOutClick}>Log Out</button>
+    </>
 }
 export default Profile
