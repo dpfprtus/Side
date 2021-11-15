@@ -7,3 +7,9 @@
     - firebase db는 NoSQL이다. 
     - 특징 
       1. Collection(폴더 비슷한거)과 그밑에 Document 이라고 불리는 것을 가지고 있다.
+    - addDoc(collection(dbService,"nweets"),{
+            nweet,
+            createdAt: Date.now(),
+        }) //데이터 쓰기
+
+    - implicit return : 같은 줄에 뭘 적던지 간에 return된다는 뜻이다. ex) prev => "hello" + prev , {}추가하면 implicit return은 사라진다.

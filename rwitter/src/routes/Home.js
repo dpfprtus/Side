@@ -1,14 +1,31 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { dbService } from 'fbase';
-import { addDoc,collection } from 'firebase/firestore';
+import { addDoc,collection,getDocs,query } from 'firebase/firestore';
 
 const Home =()=>{
     const [nweet,setNweet] = useState("");
-    const onSubmit = (e)=>{
+    const [nweets,setNweets] = useState([]);
+    const getNweets = async()=>{
+        const dbNweets = await getDocs(query(collection(dbService,"nweets")));
+        dbNweets.forEach((document)=>{
+            const nweetObject = {
+                ...document.data(),
+                id: document.id,
+            };
+            setNweets((prev) => [nweetObject,...prev]);
+            console.log(nweets)
+        });
+        
+    };
+    useEffect(() => {
+        getNweets();
+    
+    }, [])
+    const onSubmit = async (e)=>{
         e.preventDefault();
-        dbService.collection("nweet").addDoc({
+        await addDoc(collection(dbService,"nweets"),{
             nweet,
-            createAt: Date.now()
+            createdAt: Date.now(),
         })
         setNweet("");
     }
@@ -22,6 +39,15 @@ const Home =()=>{
             <input type="submit" value="Nweet"/>
             
         </form>
+        <div>
+            {nweets.map((nweet)=>(
+                <div key={nweet.id}>
+                    <h4>{nweet.id}</h4>
+                </div>
+                
+            ))
+            }
+        </div>
     </div>
 }
 export default Home;
