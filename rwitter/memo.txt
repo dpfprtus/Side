@@ -13,3 +13,40 @@
         }) //데이터 쓰기
 
     - implicit return : 같은 줄에 뭘 적던지 간에 return된다는 뜻이다. ex) prev => "hello" + prev , {}추가하면 implicit return은 사라진다.
+    - const dbNweets = await getDocs(query(collection(dbService,"nweets"))); 디비에서 읽어오기
+    - onSnapshot(collection(dbService,"nweets"),()=>{}) db의 스냅샷을 가져온다. 이 스냅샷에서 데이터 추출가능, auth에서 onAuthStateChanged 처럼 디비 변화를 관찰하다가 변함이잇으면 작동.
+      ㄴ 요즘 스타일
+      import {query,getFirestore,where,orderBy,collection,onSnapshot} from 'firebase/firestore';
+
+      ...
+
+      useEffect(()=>{
+          //실시간으로 db에서 데이터 가져오기
+          const q = query(collection(getFirestore(),'nweets'),orderBy('createdAt'));
+          const unsubscribe = onSnapshot(q,querySnapshot=>{
+              const newArray = querySnapshot.docs.map(doc=>{
+                  return {
+                      id:doc.id,
+                      ...doc.data(),
+                  };
+              });
+              setNweets(newArray);
+          })
+          return ()=>{
+              unsubscribe();
+          }
+      },[])
+
+    - fileReader API
+ㅇ fileUpload 
+    - const fileRef = ref(storageService,`${userObj.uid}/${uuidv4()}`); 파일 스토리지에대한 언급(ref)을만들고 파일을 업로드.
+    - const response = await uploadString(fileRef,attachment,"data_url") attachment에 저장된 사진 주소를 data_url형식으로 업로드
+    - attachmentURL = await getDownloadURL(attachmentRef); 다운로드 주소(화면에 보여주기위해서)
+    - ref는 어딘가의 obj이다
+
+ㅇ Delte
+    - await deleteObject(ref(storageService,nweetObj.attachmentURL)) ref로 object를 얻어 object안에 주어진 해당값이 있으면 삭제한다.
+      ㄴ const urlRef = ref(storageService, nweetObj.attachmentURL);
+         await deleteObject(urlRef)  //간단 버전
+
+ㅇ Update Profile
