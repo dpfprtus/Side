@@ -18,9 +18,13 @@ function App() {
       setInit(true);
     })
   }, [])
+  const refreshUser = ()=>{
+    console.log(authService.currentUser)
+    setUserObj({displayName:"BS"})
+  }
   return (
     <>
-    {init ? <AppRouter userObj={userObj} isLoggedIn={isLoggedIn}/> : "Initializing..."}
+    {init ? <AppRouter refreshUser={refreshUser} userObj={userObj} isLoggedIn={isLoggedIn}/> : "Initializing..."}
     </>
   );
 }
