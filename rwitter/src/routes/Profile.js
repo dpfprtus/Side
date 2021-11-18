@@ -10,6 +10,7 @@ const Profile =({userObj,refreshUser})=>{
     const onLogOutClick= () => {
         getAuth().signOut();
         history("/");
+        refreshUser();
     };
     const getMyNweets= async ()=>{
         const q = query(collection(dbService,"nweets"),where("creatorId","==",userObj.uid),orderBy("createdAt","desc"));

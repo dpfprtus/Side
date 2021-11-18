@@ -50,3 +50,16 @@
          await deleteObject(urlRef)  //간단 버전
 
 ㅇ Update Profile
+    - bug fix:   
+
+    const refreshUser = ()=>{
+    console.log(authService.currentUser) //currentUser가 너무커서 현재상태와 과거의 상태가 다른지 react가 결정하지못하게댐(리랜더링 실패)
+    setUserObj({displayName:"BS"})
+  }
+    -> setUserObj({
+          displayName:user.displayName,
+          uid:user.uid,
+          updateProfile: (args)=> user.updateProfile(args),
+        })
+        //user의 크기를 줄이기 위해 필요한 것만 사용
+    --> 크기를 줄여서 리액트 재렌더링할 수 있어졌기 때문에 profile의 이름이 Update Profile버튼을 클릭했을시 바로 바뀐다.
